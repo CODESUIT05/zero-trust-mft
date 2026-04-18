@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const db = require('./src/config/db');
 
 const run = async () => {
-  console.log('🔍 Checking database connection...');
+  console.log('... Checking database connection...');
   try {
     await db.query('SELECT 1');
     console.log('✅ Database reachable.');
@@ -12,8 +12,8 @@ const run = async () => {
     process.exit(1);
   }
 
-  // 1. Ensure Users table exists (Safety fallback)
-  console.log('📦 Ensuring tables exist...');
+  // 1. check Users table exists 
+  console.log(' Ensuring tables exist...');
   await db.query(`
     CREATE TABLE IF NOT EXISTS users (
       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -24,9 +24,9 @@ const run = async () => {
     );
   `);
 
-  // 2. Create/Update Admin User
+  // Creating  Admin User
   const email = 'admin@ztmft.com';
-  const password = 'Admin123!'; // Your login password
+  const password = 'Admin123!'; 
   const hash = await bcrypt.hash(password, 10);
 
   await db.query(
